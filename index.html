@@ -1,36 +1,67 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="ru">
 <head>
-<meta charset="utf-8"/>
-<style type="text/css">
-/* Твой оригинальный стиль */
-#page-container{position:absolute;top:0;left:0;margin:0;padding:0;border:0}
-.pf{position:relative;background-color:white;overflow:hidden;margin:0;border:0}
-.pc{position:absolute;border:0;padding:0;margin:0;top:0;left:0;width:100%;height:100%;overflow:hidden;display:block;transform-origin:0 0}
-.bi{position:absolute;border:0;margin:0;}
-.t{position:absolute;white-space:pre;font-size:1px;transform-origin:0 100%;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bozzollo Glass Gifts</title>
+    <style>
+        body { margin: 0; padding: 0; background: #f4f4f4; display: flex; justify-content: center; }
+        .wrapper { position: relative; width: 100%; max-width: 600px; line-height: 0; }
+        img { width: 100%; height: auto; display: block; }
 
-/* Кнопка копирования, которую мы добавим */
-#copy-btn {
-    position: absolute;
-    top: 50%;    /* Регулируй высоту здесь */
-    left: 20%;   /* Регулируй положение слева здесь */
-    width: 60%;  /* Ширина зоны клика */
-    height: 10%; /* Высота зоны клика */
-    cursor: pointer;
-    z-index: 999;
-    background: rgba(255,255,255,0.01); /* Почти прозрачная */
-}
+        .touch-zone { 
+            position: absolute; 
+            cursor: pointer; 
+            /* Синяя рамка для проверки, потом уберем */
+            border: 2px solid blue; 
+            background: rgba(0, 0, 255, 0.1);
+            z-index: 10;
+        }
 
-#toast {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    background: rgba(0,0,0,0.7); color: white; padding: 10px 20px;
-    border-radius: 20px; font-family: sans-serif; display: none; z-index: 1000;
-}
-</style>
+        /* Настройка зоны ПРОМОКОДА */
+        #promo-zone {
+            top: 48%;    
+            left: 15%;   
+            width: 70%;  
+            height: 8%;  
+        }
+
+        /* Настройка зоны МАГАЗИНА */
+        #etsy-zone {
+            top: 62%; 
+            left: 15%; 
+            width: 70%; 
+            height: 10%;
+        }
+
+        #toast {
+            position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);
+            background: #333; color: #fff; padding: 12px 24px;
+            border-radius: 50px; font-family: sans-serif; opacity: 0; 
+            transition: opacity 0.3s; pointer-events: none; z-index: 100;
+        }
+    </style>
 </head>
 <body>
-<div id="page-container">
-    <div id="pf1" class="pf w0 h0" style="width:750px;height:900px;">
-        <div class="pc pc1 w0 h0">
-            <img class="bi x0 y0 w0 h0" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABdwAAAcICAIAAACpZ5QjAAAACXBIWXMAABYlAAAWJQFJUiTwAAAgAElEQVR42sy8Wcx1W3YdNMaYa+99vr7529vXvVXlqrJTsZNUHAQmCU0qURJEAClCPJBIoCAREDzyALbfEBIRDzzxQkBCKCJPRolQEtGlUYA4ieNU2eVqb91bt/nbr//OOXuvOQcP3zVxHIJdTgpnPRzp6Ogcnb33XHOMOcaci2kLP5BVKOG26msLf2n026zM/lfsv8TlO2mgtWhls285qDQU1Wz3LJJkI2nbsG2wCAMkCIt0IctuGmz33iMghhG9l+wILjBEUaook0wG7XAVmYALNDpRQgAjKJuAyE5218ISra5kGwww2cAlSvVQPgS20O2M6xVQQnXHcru0vaYtMSxeBvxIjv954xuZg5qNLgz4TVmGASABmES+W/4vA990vubYBRJ+l2r2g1qeef5m7ByAj5wdy7OIF1tthdebXk28CH/PPITf6fjOQHe81nDQb77SeKbVFzCOy3JR7k1HxL659vq7Wj3I+HT0b2Hzfg4HIVWdod1LOm5vXfK0z6DnZ+KRhpV1YO41T1VX5FnfPnfeDMQyPUZ7M3xJl6ylb4Y4KawT19BjeW0/tdf2jgpu77SWuf0mMzD9ULUeLM3b1BPHLepLPT/W9r2YwuOx86h892z2XN34iEzTxEAqc80sRkIDfKycC+vUvYGR/tiqwDvgCK/p6Pw26kBYQefEPfMNZCd+1krzFAXynvmhOsix0IwyHkiPhG3P+2hTw1fKJ4hT5zocFc8WfLXlG+TD8L2aUMszr79Crziuuj6iq+Fhxa55Su/Dt6yPgvuF+3aLuKq8MK/MQXhYiKpzbc84MMcfDuylnkc/q/6BPCAfdn2kaWn5uA/3xNfdt6GXVY/QOup59Y39jdA7EZ9LPiVHz9fsX/NwhOELys8Ye64P1D6sDGHHbd8dwFZsSz7DfKZxauOfLP5TYtnxK4OU5P9L5NqffIo0CMbN9uLnnv+P3776L956ZbvrXXSSh9HWBOWBWsewaRpyOajcqaqlX3N8qbrfYn8ceX37bN3Pp2k31LbrahqGFlQuPZ1QQ2sr4oYYbzfa5NVJTBkXs0W0ISbG3u3m5eLabAdq2lXvwuRour5lXfR+cVtfP9+9P/3eP/Lmv/3awY+QgkXGb2DPdv41L38K+UJ4K4YB0Jwv4GXg0dJXLT8SVMOhNGUN3H5H9d0cXsX4uap3pRN7ZX4raqEfeXkOXlufNVbgN6MdIe53P2VeAUek4cU6RWZtvxVYQa+ac7Qre11lQslbqDCP6NcKYvwSNFpPlLO3TzxM4f1cLuxDDSccz1xbulCqdt9Q4H37LeJTwAfmS8XxwgV5FAtC30BOXR35B1v9IU5/edZ/S29RO8Q+JaNsATcEgvuJ6BXyHMsF8rrCHI4R98XmfuF+QYjaqWmvwly2LcdCFi4cn274d9X+eYfLm8AOUIDAX+tR/HIQ2v5VUfqr3hYSDpRVC9Cr/0/Fvxn+IOtv9+1tKKsfxLBhzC50YQrmbEgKeWGhADDKsDxFY3cvdwCo8OxmYUBGMqEGC3K4i05k0ighBY6tMTK7exLILbhIbFwhhyWGKFdlsUBCEACLlEB2zkpqTaQB9xFNYbPmDETtZbDVtnuBFyOpgRiMhhijelXd3SsRxKaTAGjRVkRlDBGRGdH/A/DVuX1ntfrt4O+saNIPEP9cvTRo+V+Yf2rxB6ydxlXHdWlpeNPaum7tTt8AbsMb5m56Fjfos92NqfE4cZG4UG2prdtvRX8MvAdcywfmtbEBdhGN3NjnzD0WzTMyjbIjdNRzSFw0raLGnk9Uuxj2oCD2rBm8cpVxBCMgysYafgh1YxvZEh/kskaDxj3kK65ufgxHUNKQPiUm8ryvn4rNY2Wsox8OmLpfqDUw0lVVISmDdglFOefy0kKsRo7JTj6WrrKW8nFbznu/GuMw0d0uwQJPyIG4BDbVJe0CK2oFrfr2e0ABbDEoUHmd2dhfE1XtfeixgNKz8h542HADX0rq9UB8XPWc+BA5ul2nI3JlJmNL3BOOsi6tM1mu0bxhZiFaHBlLsoLv2NdRH/UIO6IqjF4R44Peb43njLn61LBb2Fj3Of7RwL+huHfHKX+QkWeigFzwd8n/E/kq8g3r57n815nvtwSD2cRyLYNYHIuwEXbaBkOKgum5DFZQINNdJiiAMIoKQM6EGQqAfVlYFSGGC6gIlbhUtShBbvZgFLgV0ugAjEYEEfaSVASiylV3DFwazBBk9fIWWBFH4B4Y4W3ljbU1EtXYK8KITDX1Eo4w/jepz9MQ8Zu77jK5ARNRa/hnsv508njsny2MHr+e81kMr3o50/orHE63+w+H3jl/AK97bAuHjW80u+Ojwop6PXhpPzXvhR8s6/eVT2q8r/Ya4px1k9gd43CpVS2/CHEcPp/a5vY7QzXHEfB+54nYsHmGHp5Ox2Fn6etel0Pbk44U95ecw13YrJdvDPMSsTtPY9NrWevQLB+kZ2EsXCW2YzzKZOmm+GLVq/fJw1say5vvtC1yegPDQdftBGV/3nE1+ofTtSxfbW2O9qi44+yEjSNGmh+wkwC5C0T6irklgGFGvYkcXE9qeECU8NKYyR9hDOWz8HH3d6REPWReW9vUWwP2ev118KbxlcKqsIp23ufr5hPEsgCD90pvO3osY/GEw3fLtzF/BszSZeN19q8bk+Mz9DE8Ba+W5W9XX4/jA8Zl+pI6LuzYh00HRkfehhfHaXKfvi18hFzCu25NcS/7y769asMV9WnrNWPd6kMsz7pvxIdmsV0FjrOO3V61pTxXHFabnBn9ez2/7dgf9EXrtniDBcA3iUT7YuGHh35iXSbeZy1oE3lUSfIamJnN68s+no+r/9Dxo6x9MEnD7VfykP+HcvxKmvH3eAig4tde/uW/8uF/+vrpdx+dnvZ1b21HSmOBpwFzG2+hRB2zTvviOZ86ruWjpp1hnG42TzfLZWvDarW/rOfEdDi1zKuNAwkAY9sjb9iW9Twt2z4Qq2FxXq910OTAalu5rZul7yw9VuhjM8fDhrPqtxc5fbTw/YvNtP7Rn3j7j/3Yg39h5T2D3xcNLqS6Kqr4DPWfYf65htfBFdQXXKNSNamOwGfQpjCFp8Kq51MtH2K4V+3t4Jlq24f7Q76/9dMRn81lLZ9XPGYc9vxWqLf2edTFFu8DD6eh5XzueCU89+23s/fQY3CP7dK8tEtIuiz0BJdqmGP1BbSdjFv6Mq+fZBuGOi2cG2K83lDW8wRRu027jD3Ud+09+/Nd741+0nW/q7PvykcNH2c+Zyzib4uf+qmf/kHBUpUxkYP7zzK3aK+Bh1XPit9WwHSEIpooECZKgIkiErbNkkQSMF2ECZsNlEG7CIoCwKXc0aUago0g2MtzqRcJRgAoFw0AwUHcA5qxIUHskKKG4C4habEbXWLY7N1Njbyj41bAuTWvjCL3ox06r4CNuCsZrM4ZZXsDNeFttC8Lh7ZIgiD0m4NFNAyD0kK3qv81l/8BGhBfUhH5FeSG6uJOlYXnLQ6BQ7ubM2tTctP90D17HRUdymBwCKC800T7SfesuAe+WsXCU/oyvCo/NXvE76CO2D/g/KzaYcWUeclixSl7tQiNZV/WsAaPxSNxMC7F7lpgkMhaAwdtPI7YQ2/wdcUhScam13kYgV7ohVNyRVzUaOlhiJivCPehg2AN8CwVfECl+rl85XgdPG19DZx1HdsT+D48FBKaraQN4D+iFa9L2buHQmKgq3LoWxj50Cq/FFfQgeWvfkOZdXeWxmukVceaYjB8C9zuuodeDr5fP7VtqFzwx1/Yz8b3mrbEqd+X9UEu9VH3M3PPwhvUE/XuqdYKuWbp2dPiU3CFvwDAPzRXqGvi4tICmGtwKZ/ZI75OD0elk3iLQdITcWFf0nHUGLlAi+sjT7rPE86iDqD0XHVfMHedQOAtsRaGOjL2F54Fdd3YeteGzzB3wg+ovEC+oNxfuBlLcSTxxLaxHFd/ktK/6/dAx2cmBv2L9Q+UYkqTh6qZ0PT/7u0/+wovbn/vUg1i5Sn3D1LJR9Gk4bm2395vtZt20OwwjkH3ZVu3YLXE2++Pe58IDupHz3u5pVmvaDtPMQvZs460cywZ0TJPUurdLDGPoFEDoJnNNlbW3zuF67lw22+GmBQe1p1ebnzsfnrw8/fIb//6XX/vjD6ZPUwIIkPz+N351YCTejfoKtvu9X7lv6Y20gk4Yx9INNc15SS8xDday8MQ4IH/BPAxOZACX9szaz3zqQsQ9xNa4xXZ0Xkl2PCqM8paguE9mxYw4NrbABftiGTyEptChcIRIwarKWmdcKkI+pCpGkVNxpCGvKfQ2GSsD5nqMEb1X3jR21k1f3kM68CpxH/zYvCCO3Q8wvyf+7xjeNQOe7KKmhgeZO9CW2Kogy3FVsQmGbOLKAHEv2mAg44gKz0/7slRdkDdDAxtwQLfk18D3Ypkcn+oaAkChk/Hrhj/+A+sfYP0USMJhhKR3OPw4+Ttd117OlUvwRlZR1TC1HZRd4rhKUdGMAlMgilBRJhKGiGoSCiyoMqCx2SXDMsYmLgQsmJQiyWgBsFcWMHpgayZdGVkF0FCIjUWTQgTFT4CXJQuW6RQ0kyEHjXQViiyQiiEcNXbazvrEMMFggpVAhzu4MQ0GICOqCqnAuGQLTf9yTL8f7UfY3qjWknOg/cAqMQIgtx1/lvg/on3BqOrnzjlas/Z6FTAN3BVoz1mX2bNRxE317k44SYDXxg1qg1xZo+IZvSnfUl1C1SVJcV8s45IYpMlR4FgIowCKx+DbGReIM9WE6rlcDhLH1nMjHsCn3p6pniBcmIFgngBGzB03cIYeUUMWwFspA6fO1vkEbnCB5+SWueaySYjcbRjsLdmXrEJYg9Xoq/AufFigeQMXbIJVC7gYs5YOrogWfV26jurkBuyFiUpwpEiEUMSOOHZcFyp0LKuwLidqIofCzEjr1jC9Sz0ku3CFnIgLcy6XncYq2mBvEmcoUiuggfvGZBkSsBs8BA3shHaKPbS4puAeI6mNcF/aAzLZYTAOHAfuW/TbPnRGEpOrkBsUAmfOb5C7jjeJ6TeSnL8/UQbwwNxzfi1yEzxGexX5gf1Nim6CCDJoRJEGDCBAV2UWnaEyIIYpV0lYRAsmYMOgQRAu96INooIO0Yi5OMMKNDloJx1k6K7gxgRbSmlFDmTQK2qgykxAd1KpHWQTy1qAsgmnsGFt5RG8b13BV4FBDdX64o2WEqpjJh8Sf7RiH/x16N//vyxhNpnLd5V/2vhq+Z+J2GX/FvIjc2GQbq7naGa8kn2KAnoHEzjQ+FpVhzbyJJ51H9IIjaidjCfha3CnxZuJTG+EF9EP6MviNdtvafgUfIX5QzK82uNyjbmb+8VQr2FnVbhJPKOGxnuFlbEpXIuwe7CjNo6G4Vg4CYe9FY4jRmh2ncMSaJ6L+0IIsxVsR6g9+QXdq7FUgcm4KgehaDSutPm4xntoj6JujG2Fw4+KH0VVoHVcmYN0KDB9YVV5DB4EDxNryFEb8sjjEbBN3zQ8Rg2Jl+RsT3SZVeHggESpS68p7iUuUTtRnxa1+AVw0uII7vJ51XeJmblLuTCpHSSvUGfdjniHiOrvGS/AXn0XulE7L0+hg6xu9ogj+4C+JT7sOOsMcEAO5hUcwRNjVdiKrurmdeAePcPXqK39DHFrAWDETuIq8XELBw+KLG5A06q6Tp4pgthBvlIwIXovPYpfEA9Q34Wvii+EU3CvcC1M8GX3pXxgPK923dofJh7ebXSyPlFY/+HE4++v5wqoXzj72a9e/PmHB9uTaYI2NaOWOdrVzjgqTpe83cznrNgZThK3c99kn4Bp8bX9smqNfGTvL77eH/ardpaljztdkciM2Epzn6vfHrcpdyZEbVpF1H5vu+SteZsFYGfBsHbfLmZ16HrM4SLrG+fLd5/f/y37X/5Dn/533jn6PWPtgQsKVHw/mTNJmZR31C/LfzF7ulx10crEIh2a+zNvEJUp5EbTiLHbO6wd4r2OTfG0iXSl5+BO9Y9QG+skZOZlzkNhU1wHH4V3XM8JyEe0MN4g9qp5qDP7NhihQ+LA7cjcBxPYwgO3si4QW/LUbMNY1MA8Qql8DXRpDEzmDcmKGb15vpAWw33+QH0z4BH1RuA8+S1zpN9a5tv4qZ/8T35AsETIhr2KvoOU45raor4NfmMIgrRZVeYChMl0EQoN5GAYTPIuTk3WXWwCNMgy7TtFxjDbGGrcLm2brafu1idcDFBS3ciqJDvVjQasgC6OjSek4AVOgjTtAlO6EzMoklnueWcBCc3VSlfQFTwHVnOd5XZLE5palBJLQfpy1H+EeB0i2UnzB0Y6fx2me4FbFElkbmr578mvkJ93NOa7fX6Xvi+OxAYaFa2XhVXQvV+ywCbEPupIdVzDI9XY4pdaftH4AvG86j3H1jrOXIzN0Bp9nctLagtUi7dTO+kz1oL+LAcxViyGVsEReVltzdhV7XM4oI+JY3q/10XVe/ZskGpWxM6jqCP
+
+<div class="wrapper">
+    <img src="bg.jpeg" alt="Gift Card">
+
+    <div id="promo-zone" class="touch-zone" onclick="copyCode('CREATIVE50')"></div>
+    <a href="https://bozzolloglass.etsy.com" id="etsy-zone" class="touch-zone"></a>
+</div>
+
+<div id="toast">Код скопирован!</div>
+
+<script>
+    function copyCode(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+        });
+    }
+</script>
+
+</body>
+</html>
