@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,27 +12,28 @@
         .touch-zone { 
             position: absolute; 
             cursor: pointer; 
-            border: 2px solid blue; 
+            border: 2px solid blue; /* Синяя рамка для проверки */
             background: rgba(0, 0, 255, 0.1);
             z-index: 10;
         }
 
-        /* 1. ЗОНА ПРОМОКОДА — теперь ниже */
+        /* 1. ЗОНА ПРОМОКОДА */
         #promo-zone {
-            top: 73.5%;    
+            top: 60.5%;    
             left: 24%;   
             width: 52%;  
             height: 5.5%;  
         }
 
-        /* 2. ЗОНА МАГАЗИНА — теперь ниже */
+        /* 2. ЗОНА МАГАЗИНА (ETSY) */
         #etsy-zone {
-            top: 81%; 
+            top: 70%; 
             left: 24%; 
             width: 52%; 
-            height: 6.5%;
+            height: 10%;
         }
 
+        /* Всплывающее уведомление */
         #toast {
             position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);
             background: rgba(0,0,0,0.8); color: #fff; padding: 12px 24px;
@@ -50,7 +51,7 @@
     <a href="https://bozzolloglass.etsy.com" id="etsy-zone" class="touch-zone"></a>
 </div>
 
-<div id="toast">Промокод CREATIVE50 скопирован!</div>
+<div id="toast">Code CREATIVE50 copied!</div>
 
 <script>
     function copyCode(text) {
@@ -59,7 +60,8 @@
             toast.style.opacity = '1';
             setTimeout(() => { toast.style.opacity = '0'; }, 2000);
         }).catch(err => {
-            alert('Промокод: ' + text);
+            // Если браузер блокирует копирование, покажем запасное окно
+            alert('Your code: ' + text);
         });
     }
 </script>
