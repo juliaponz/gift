@@ -1,65 +1,25 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bozzollo Glass Gifts</title>
     <style>
-        body { margin: 0; padding: 0; background: #f4f4f4; display: flex; justify-content: center; overflow-x: hidden; }
-        .wrapper { position: relative; width: 100%; max-width: 600px; line-height: 0; }
-        img { width: 100%; height: auto; display: block; }
-
-        .touch-zone { 
+        body { margin: 0; background: gray; display: flex; justify-content: center; }
+        .container { position: relative; width: 100%; max-width: 600px; }
+        img { width: 100%; display: block; }
+        .box { 
             position: absolute; 
-            cursor: pointer; 
-            background: rgba(255, 0, 0, 0.4); /* Сейчас зоны КРАСНЫЕ, чтобы ты их видела */
-            z-index: 10;
-        }
-
-        /* ЗОНА ПРОМОКОДА (нажми для копирования) */
-        #promo-zone {
-            top: 50%;    
-            left: 10%;   
-            width: 80%;  
-            height: 10%; 
-        }
-
-        /* ЗОНА ETSY (переход в магазин) */
-        #etsy-zone {
-            top: 65%; 
-            left: 10%; 
-            width: 80%; 
-            height: 12%;
-        }
-
-        #toast {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: #333; color: #fff; padding: 12px 24px;
-            border-radius: 50px; font-size: 14px; opacity: 0; 
-            transition: opacity 0.3s; pointer-events: none; z-index: 100;
+            border: 5px solid black; /* Жирная рамка, чтобы видеть зону */
+            background: rgba(0,0,0,0.2); 
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
-<div class="wrapper">
-    <img src="bg.jpg" alt="Gift Card">
-
-    <div id="promo-zone" class="touch-zone" onclick="copyCode('CREATIVE50')"></div>
-    <a href="https://bozzolloglass.etsy.com" id="etsy-zone" class="touch-zone"></a>
-</div>
-
-<div id="toast">Код скопирован!</div>
-
-<script>
-    function copyCode(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            const toast = document.getElementById('toast');
-            toast.style.opacity = '1';
-            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
-        });
-    }
-</script>
-
+    <div class="container">
+        <img src="bg.jpg">
+        
+        <div class="box" style="top:45%; left:10%; width:80%; height:10%;" onclick="alert('Код скопирован!')"></div>
+    </div>
 </body>
 </html>
