@@ -12,33 +12,32 @@
         .touch-zone { 
             position: absolute; 
             cursor: pointer; 
-            /* Синяя рамка для проверки, потом уберем */
             border: 2px solid blue; 
             background: rgba(0, 0, 255, 0.1);
             z-index: 10;
         }
 
-        /* Настройка зоны ПРОМОКОДА */
+        /* 1. ЗОНА ПРОМОКОДА — теперь ниже */
         #promo-zone {
-            top: 48%;    
-            left: 15%;   
-            width: 70%;  
-            height: 8%;  
+            top: 73.5%;    
+            left: 24%;   
+            width: 52%;  
+            height: 5.5%;  
         }
 
-        /* Настройка зоны МАГАЗИНА */
+        /* 2. ЗОНА МАГАЗИНА — теперь ниже */
         #etsy-zone {
-            top: 62%; 
-            left: 15%; 
-            width: 70%; 
-            height: 10%;
+            top: 81%; 
+            left: 24%; 
+            width: 52%; 
+            height: 6.5%;
         }
 
         #toast {
             position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);
-            background: #333; color: #fff; padding: 12px 24px;
-            border-radius: 50px; font-family: sans-serif; opacity: 0; 
-            transition: opacity 0.3s; pointer-events: none; z-index: 100;
+            background: rgba(0,0,0,0.8); color: #fff; padding: 12px 24px;
+            border-radius: 50px; opacity: 0; transition: opacity 0.3s; z-index: 100;
+            font-family: sans-serif; pointer-events: none;
         }
     </style>
 </head>
@@ -51,7 +50,7 @@
     <a href="https://bozzolloglass.etsy.com" id="etsy-zone" class="touch-zone"></a>
 </div>
 
-<div id="toast">Код скопирован!</div>
+<div id="toast">Промокод CREATIVE50 скопирован!</div>
 
 <script>
     function copyCode(text) {
@@ -59,6 +58,8 @@
             const toast = document.getElementById('toast');
             toast.style.opacity = '1';
             setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+        }).catch(err => {
+            alert('Промокод: ' + text);
         });
     }
 </script>
